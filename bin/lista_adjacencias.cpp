@@ -34,6 +34,18 @@ void insirir_ligacao(Lista lista_adjacencia, int indice, char type_component, in
     lista_adjacencia.lista[indice] = novo_no;
 }
 
+void imprimir_lista(Lista &lista_adjacencia, int tamanho){
+    for(int i = 0; i< tamanho; i++)
+    {
+        cout << lista_adjacencia.lista[i].rotulo;
+        cout << " -> ";
+        for(No *no = lista_adjacencia.lista[i].proximo_no; no->proximo_no != nullptr; no = no->proximo_no)
+        {
+            cout << no->rotulo << " -> ";
+        }
+        cout << endl;
+    }
+}
 
 int main() {
 
