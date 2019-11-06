@@ -1,8 +1,9 @@
 #include <iostream>
-#define MAX 50
+#include "util.h"
 
 using namespace std;
 
+<<<<<<< HEAD
 struct componente{
     char type;
     float value;
@@ -35,6 +36,8 @@ void print_lista(Lista *lista_adjacencia);
 
 void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes);
 
+=======
+>>>>>>> 088f6a459479344a4fa0eea43a3c990239da746a
 int main()
 {
     int n = 4;
@@ -66,6 +69,7 @@ int main()
 
     return 0;
 }
+<<<<<<< HEAD
 
 void createAdjMatrix(adjMatrix *matriz, int nodes){
     for(int i=0; i<nodes; i++){
@@ -179,3 +183,5 @@ void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
         }
     }
 }
+=======
+>>>>>>> 088f6a459479344a4fa0eea43a3c990239da746a
