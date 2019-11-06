@@ -33,6 +33,8 @@ void criar_lista(Lista *lista_adjacencia, int tamanho);
 void inserir_ligacao(Lista *lista_adjacencia, char type, int valor, int n1, int n2);
 void print_lista(Lista *lista_adjacencia);
 
+void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes);
+
 int main()
 {
     int n = 4;
@@ -42,9 +44,17 @@ int main()
     addComponente(matriz, 'I', 1.0, 1, 3);
     addComponente(matriz, 'W', 0.0, 0, 2);
     addComponente(matriz, 'W', 0.0, 2, 3);
+//    addComponente(matriz, 'R', 0.0, 4, 5);
+//    addComponente(matriz, 'W', 0.0, 5, 3);
+//    addComponente(matriz, 'W', 0.0, 2, 6);
     printMatrix(matriz, n);
     cout<<endl;
 
+    adjMatrix *spanningTree = new adjMatrix();
+    findSpanningTree(matriz, spanningTree, n);
+    printMatrix(spanningTree, n);
+    cout<<endl;
+    n = 4;
     Lista *listaajd = new Lista();
     criar_lista(listaajd, n);
     inserir_ligacao(listaajd, 'R', 2.0, 0, 1);
@@ -129,4 +139,43 @@ void print_lista(Lista *lista_adjacencia){
         cout<<endl;
     }
     cout<<"-------------------------"<<endl;
+}
+
+void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
+    int C[MAX] = {0};
+    C[0] = 1;
+    for (int i=0;i<nodes;i++) {
+        for (int j=0;j<nodes;j++) {
+            result->v[i][j].type = '0';
+            result->v[i][j].value = 0.0;
+        }
+    }
+    for (int i = 0; i < nodes; i++) {
+        for(int j = 0; j < nodes; j++){
+            if((matriz->v[i][j].type == 'W' ||
+            matriz->v[i][j].type == 'R' ||
+            matriz->v[i][j].type == 'C' ||
+            matriz->v[i][j].type == 'I') &&
+            C[i] == 1 && C[j] == 0){
+                result->v[i][j].type = matriz->v[i][j].type;
+                result->v[i][j].value = matriz->v[i][j].value;
+
+                result->v[j][i].type = matriz->v[j][i].type;
+                result->v[j][i].value = matriz->v[j][i].value;
+                C[j] = 1;
+            }
+            if((matriz->v[i][j].type == 'W' ||
+            matriz->v[i][j].type == 'R' ||
+            matriz->v[i][j].type == 'C' ||
+            matriz->v[i][j].type == 'I') &&
+            C[i] == 0 && C[j] == 1){
+                result->v[i][j].type = matriz->v[i][j].type;
+                result->v[i][j].value = matriz->v[i][j].value;
+
+                result->v[j][i].type = matriz->v[j][i].type;
+                result->v[j][i].value = matriz->v[j][i].value;
+                C[i] = 1;
+            }
+        }
+    }
 }
