@@ -52,8 +52,10 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../bin/main.cpp 
-OBJECTS       = main.o
+SOURCES       = ../bin/main.cpp \
+		../bin/util.cpp 
+OBJECTS       = main.o \
+		util.o
 DIST          = /home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/common/unix.conf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/common/linux.conf \
@@ -206,6 +208,7 @@ DIST          = /home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/qt_config.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/spec_post.prf \
+		../bin/.qmake.stash \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/toolchain.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/default_pre.prf \
@@ -219,7 +222,8 @@ DIST          = /home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/exceptions.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/yacc.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/lex.prf \
-		../bin/bin.pro  ../bin/main.cpp
+		../bin/bin.pro util.h ../bin/main.cpp \
+		../bin/util.cpp
 QMAKE_TARGET  = bin
 DESTDIR       = 
 TARGET        = bin
@@ -383,6 +387,7 @@ Makefile: ../bin/bin.pro /home/funbem/Qt/5.12.3/gcc_64/mkspecs/linux-g++/qmake.c
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/qt_config.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/toolchain.prf \
 		/home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/default_pre.prf \
@@ -550,6 +555,7 @@ Makefile: ../bin/bin.pro /home/funbem/Qt/5.12.3/gcc_64/mkspecs/linux-g++/qmake.c
 /home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/qt_config.prf:
 /home/funbem/Qt/5.12.3/gcc_64/mkspecs/linux-g++/qmake.conf:
 /home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/exclusive_builds.prf:
 /home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/toolchain.prf:
 /home/funbem/Qt/5.12.3/gcc_64/mkspecs/features/default_pre.prf:
@@ -607,8 +613,11 @@ compiler_clean:
 
 ####### Compile
 
-main.o: ../bin/main.cpp 
+main.o: ../bin/main.cpp ../bin/util.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../bin/main.cpp
+
+util.o: ../bin/util.cpp ../bin/util.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o util.o ../bin/util.cpp
 
 ####### Install
 

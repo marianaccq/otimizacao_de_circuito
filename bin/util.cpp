@@ -84,3 +84,80 @@ void print_lista(Lista *lista_adjacencia){
     }
     cout<<"-------------------------"<<endl;
 }
+
+void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
+    int C[MAX] = {0};
+    C[0] = 1;
+    for (int i=0;i<nodes;i++) {
+        for (int j=0;j<nodes;j++) {
+            result->v[i][j].type = '0';
+            result->v[i][j].value = 0.0;
+        }
+    }
+    for (int i = 0; i < nodes; i++) {
+        for(int j = 0; j < nodes; j++){
+            if((matriz->v[i][j].type == 'W' ||
+            matriz->v[i][j].type == 'R' ||
+            matriz->v[i][j].type == 'C' ||
+            matriz->v[i][j].type == 'I') &&
+            C[i] == 1 && C[j] == 0){
+                result->v[i][j].type = matriz->v[i][j].type;
+                result->v[i][j].value = matriz->v[i][j].value;
+
+                result->v[j][i].type = matriz->v[j][i].type;
+                result->v[j][i].value = matriz->v[j][i].value;
+                C[j] = 1;
+            }
+            if((matriz->v[i][j].type == 'W' ||
+            matriz->v[i][j].type == 'R' ||
+            matriz->v[i][j].type == 'C' ||
+            matriz->v[i][j].type == 'I') &&
+            C[i] == 0 && C[j] == 1){
+                result->v[i][j].type = matriz->v[i][j].type;
+                result->v[i][j].value = matriz->v[i][j].value;
+
+                result->v[j][i].type = matriz->v[j][i].type;
+                result->v[j][i].value = matriz->v[j][i].value;
+                C[i] = 1;
+            }
+        }
+    }
+}
+/*
+ * Esta função deve retornar o número de circuitos fundamentais formados.
+ * Usando 4 matrizes, A, B, C e D, onde A é a matriz de adjacência original, B é a matriz de adjacência da árvore geradora
+ *
+ */
+int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix *D, int nodes)
+{
+  findSpanningTree(A, B, nodes);
+  *C = *A;
+  for(int i = 0;i < nodes; i++)
+  {
+      for(int j = 0; j < nodes; j++)
+      {
+          if(B->v[i][j].type != '0')
+          {
+              C->v[i][j].value = 0.0;
+              C->v[i][j].type = '0';
+          }
+          D->v[i][j].value = B->v[i][j].value;
+          D->v[i][j].type = B->v[i][j].type;
+      }
+  }
+  int k = 0;
+  for(int i = 0; i < nodes; i++)
+  {
+      for(int j = i+1; j < nodes; j++)
+      {
+          if(C->v[i][j].type != '0')
+          {
+              k = k + 1;
+              D->v[i][j].type = C->v[i][j].type;
+              D->v[i][j].value = C->v[i][j].value;
+              //procedimento que temos que desenrolar com o professor amanhã
+          }
+      }
+  }
+  return k;
+}
