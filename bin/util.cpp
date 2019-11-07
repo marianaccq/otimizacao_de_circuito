@@ -128,36 +128,32 @@ void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
  * Usando 4 matrizes, A, B, C e D, onde A é a matriz de adjacência original, B é a matriz de adjacência da árvore geradora
  *
  */
-int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix *D, int nodes)
-{
-  findSpanningTree(A, B, nodes);
-  *C = *A;
-  for(int i = 0;i < nodes; i++)
-  {
-      for(int j = 0; j < nodes; j++)
-      {
-          if(B->v[i][j].type != '0')
-          {
-              C->v[i][j].value = 0.0;
-              C->v[i][j].type = '0';
-          }
-          D->v[i][j].value = B->v[i][j].value;
-          D->v[i][j].type = B->v[i][j].type;
-      }
-  }
-  int k = 0;
-  for(int i = 0; i < nodes; i++)
-  {
-      for(int j = i+1; j < nodes; j++)
-      {
-          if(C->v[i][j].type != '0')
-          {
-              k = k + 1;
-              D->v[i][j].type = C->v[i][j].type;
-              D->v[i][j].value = C->v[i][j].value;
-              //procedimento que temos que desenrolar com o professor amanhã
-          }
-      }
-  }
-  return k;
+int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[MAX], int nodes){
+
+    findSpanningTree(A, B, nodes);
+    *C = *A;
+    adjMatrix *aux = new adjMatrix();
+    for(int i = 0;i < nodes; i++){
+        for(int j = 0; j < nodes; j++){
+            if(B->v[i][j].type != '0'){
+                C->v[i][j].value = 0.0;
+                C->v[i][j].type = '0';
+            }
+            aux->v[i][j].value = B->v[i][j].value;
+            aux->v[i][j].type = B->v[i][j].type;
+        }
+    }
+    int k = 0;
+    for(int i = 0; i < nodes-1; i++){
+        for(int j = i+1; j < nodes; j++){
+            if(C->v[i][j].type != '0'){
+                D[k] = *aux;
+                k = k + 1;
+                D[k].v[i][j].type = C->v[i][j].type;
+                D[k].v[i][j].value = C->v[i][j].value;
+                //procedimento que temos que desenrolar com o professor amanhã
+            }
+        }
+    }
+    return k;
 }

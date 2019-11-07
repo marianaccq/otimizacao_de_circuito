@@ -3,8 +3,6 @@
 
 using namespace std;
 
-
-
 int main()
 {
     int n = 4;
@@ -14,7 +12,21 @@ int main()
     addComponente(matriz, 'I', 1.0, 1, 3);
     addComponente(matriz, 'W', 0.0, 0, 2);
     addComponente(matriz, 'W', 0.0, 2, 3);
+
+    adjMatrix *B = new adjMatrix();
+    adjMatrix *C = new adjMatrix();
+    adjMatrix *D = new adjMatrix[MAX];
+    createAdjMatrix(B, n);
+    createAdjMatrix(C, n);
+    int x=0;
+
+    x=findFundamentalcycles(matriz, B, C, D, n);
     printMatrix(matriz, n);
+    printMatrix(B, n);
+    printMatrix(C, n);
+    printMatrix(&D[0], n);
+
+    cout<<endl;
     cout<<endl;
 
     adjMatrix *spanningTree = new adjMatrix();

@@ -1,7 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 // Header para a definição de algumas funções e structs úteis no tratamento das nossas estruturas
-#define MAX 100
+#define MAX 5
 
 struct componente{
     char type;
@@ -35,6 +35,6 @@ void criar_lista(Lista *lista_adjacencia, int tamanho);
 void inserir_ligacao(Lista *lista_adjacencia, char type, int valor, int n1, int n2);
 void print_lista(Lista *lista_adjacencia);
 void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes);
-int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix *D, int nodes);
+int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[MAX], int nodes);
 
 #endif // UTIL_H
