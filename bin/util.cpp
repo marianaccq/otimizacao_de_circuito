@@ -128,7 +128,7 @@ void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
  * Usando 4 matrizes, A, B, C e D, onde A é a matriz de adjacência original, B é a matriz de adjacência da árvore geradora
  *
  */
-int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[MAX], int nodes){
+int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[], int nodes){
 
     findSpanningTree(A, B, nodes);
     *C = *A;
@@ -144,14 +144,15 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
         }
     }
     int k = 0;
+    // Ver se os ranges desse i e j tao contidos dentro de n (pra n dar segmentation fault)
     for(int i = 0; i < nodes-1; i++){
         for(int j = i+1; j < nodes; j++){
             if(C->v[i][j].type != '0'){
                 D[k] = *aux;
-                k = k + 1;
                 D[k].v[i][j].type = C->v[i][j].type;
                 D[k].v[i][j].value = C->v[i][j].value;
-                //procedimento que temos que desenrolar com o professor amanhã
+                k = k + 1;
+                //procedimento de remover os ramos sobrando q n fazem parte do ciclo
             }
         }
     }

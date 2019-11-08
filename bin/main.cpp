@@ -15,16 +15,19 @@ int main()
 
     adjMatrix *B = new adjMatrix();
     adjMatrix *C = new adjMatrix();
-    adjMatrix *D = new adjMatrix[MAX];
+    //fazer adjMatrix *D[n]; pra testar
+    adjMatrix D[n];
     createAdjMatrix(B, n);
     createAdjMatrix(C, n);
     int x=0;
 
     x=findFundamentalcycles(matriz, B, C, D, n);
     printMatrix(matriz, n);
-    printMatrix(B, n);
-    printMatrix(C, n);
-    printMatrix(&D[0], n);
+    //printMatrix(B, n);
+    //printMatrix(C, n);
+    for(int i=0; i<n; i++){
+        printMatrix(&D[i], n);
+    }
 
     cout<<endl;
     cout<<endl;
