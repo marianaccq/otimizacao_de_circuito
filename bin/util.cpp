@@ -13,6 +13,7 @@ void createAdjMatrix(adjMatrix *matriz, int nodes){
             matriz->v[i][j].value = 0;
         }
     }
+    matriz->nodes = nodes;
 }
 /*
  * Esta função adiciona um componente, ou seja, um elemento de circuito como já foi definido na modelagem do
@@ -148,10 +149,12 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
         for(int j = i+1; j < nodes; j++){
             if(C->v[i][j].type != '0'){
                 D[k] = *aux;
-                k = k + 1;
                 D[k].v[i][j].type = C->v[i][j].type;
                 D[k].v[i][j].value = C->v[i][j].value;
-                //procedimento que temos que desenrolar com o professor amanhã
+                D[k].v[j][i].type = C->v[j][i].type;
+                D[k].v[j][i].value = C->v[j][i].value;
+                k++;
+                //procedimento de prunning aqui na matriz D[k]
             }
         }
     }
