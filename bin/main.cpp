@@ -5,13 +5,16 @@ using namespace std;
 
 int main()
 {
-    int n = 4;
+    int n = 6;
     adjMatrix *matriz = new adjMatrix();
     createAdjMatrix(matriz, n);
     addComponente(matriz, 'R', 2.0, 0, 1);
     addComponente(matriz, 'I', 1.0, 1, 2);
     addComponente(matriz, 'W', 0.0, 2, 3);
-    addComponente(matriz, 'W', 0.0, 3, 4);
+    addComponente(matriz, 'W', 0.0, 3, 0);
+    addComponente(matriz, 'W', 0.0, 2, 4);
+    addComponente(matriz, 'W', 0.0, 3, 5);
+    addComponente(matriz, 'W', 0.0, 4, 5);
 
     adjMatrix *B = new adjMatrix();
     adjMatrix *C = new adjMatrix();
@@ -19,13 +22,15 @@ int main()
     adjMatrix D[n];
     createAdjMatrix(B, n);
     createAdjMatrix(C, n);
-    int x=0;
+    int k=0;
 
-    x=findFundamentalcycles(matriz, B, C, D, n);
+    k=findFundamentalcycles(matriz, B, C, D, n);
     printMatrix(matriz, n);
-    //printMatrix(B, n);
-    //printMatrix(C, n);
-    for(int i=0; i<n; i++){
+    printMatrix(B, n);
+    printMatrix(C, n);
+    printMatrix(&D[0], n);
+    cout<<"MATRIZES D: "<<endl;
+    for(int i=0; i<k; i++){
         printMatrix(&D[i], n);
     }
 

@@ -1,7 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 // Header para a definição de algumas funções e structs úteis no tratamento das nossas estruturas
-#define MAX 4
+#define MAX 6
 
 struct componente{
     char type;

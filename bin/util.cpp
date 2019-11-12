@@ -93,15 +93,12 @@ void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
         for (int j=0;j<nodes;j++) {
             result->v[i][j].type = '0';
             result->v[i][j].value = 0.0;
+
         }
     }
     for (int i = 0; i < nodes; i++) {
         for(int j = 0; j < nodes; j++){
-            if((matriz->v[i][j].type == 'W' ||
-            matriz->v[i][j].type == 'R' ||
-            matriz->v[i][j].type == 'C' ||
-            matriz->v[i][j].type == 'I') &&
-            C[i] == 1 && C[j] == 0){
+            if(matriz->v[i][j].type != '0' && C[i] == 1 && C[j] == 0){
                 result->v[i][j].type = matriz->v[i][j].type;
                 result->v[i][j].value = matriz->v[i][j].value;
 
@@ -109,11 +106,7 @@ void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
                 result->v[j][i].value = matriz->v[j][i].value;
                 C[j] = 1;
             }
-            if((matriz->v[i][j].type == 'W' ||
-            matriz->v[i][j].type == 'R' ||
-            matriz->v[i][j].type == 'C' ||
-            matriz->v[i][j].type == 'I') &&
-            C[i] == 0 && C[j] == 1){
+            if(matriz->v[i][j].type != '0' && C[i] == 0 && C[j] == 1){
                 result->v[i][j].type = matriz->v[i][j].type;
                 result->v[i][j].value = matriz->v[i][j].value;
 
@@ -148,8 +141,8 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
     // Ver se os ranges desse i e j tao contidos dentro de n (pra n dar segmentation fault)
     for(int i = 0; i < nodes-1; i++){
         for(int j = i+1; j < nodes; j++){
+            D[k] = *aux;
             if(C->v[i][j].type != '0'){
-                D[k] = *aux;
                 D[k].v[i][j].type = C->v[i][j].type;
                 D[k].v[i][j].value = C->v[i][j].value;
 
