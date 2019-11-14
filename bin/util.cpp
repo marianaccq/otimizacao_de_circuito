@@ -127,6 +127,7 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
     findSpanningTree(A, B, nodes);
     *C = *A;
     adjMatrix *aux = new adjMatrix();
+    aux->nodes = A->nodes;
     for(int i = 0;i < nodes; i++){
         for(int j = 0; j < nodes; j++){
             if(B->v[i][j].type != '0'){
@@ -148,10 +149,15 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
 \
                 D[k].v[j][i].type = C->v[j][i].type;
                 D[k].v[j][i].value = C->v[j][i].value;
+
+                // Procedimento de prunning na matriz D[k]
+                // Onde k = numero de ramos que podem formar ciclos fundamentais
+                acharPontesUtil(&D[k]);
+                // Transformar o grafo em direcionado
+                // Isso serve para dar sentido as correntes
+                direcionarGrafo(&D[k]);
                 k++;
 
-                acharPontesUtil(&D[k]);
-                //procedimento de prunning aqui na matriz D[k]
             }
         }
     }
@@ -186,20 +192,36 @@ void acharPontesRec(adjMatrix *matriz, int u, bool visitado[], int ordemDesc[], 
 
 void acharPontesUtil(adjMatrix *matriz)
 {
+    // Declarando variáveis para utilizar na função recursiva de achar pontes no grafo
     bool *visitado = new bool[matriz->nodes];
     int *ordemDesc = new int[matriz->nodes];
     int *low = new int[matriz->nodes];
     int *pai = new int[matriz->nodes];
     int contador = 0;
 
+    // "Zerando" os arrays de nós pai e nós visitados
     for(int i=0; i<matriz->nodes; i++){
         pai[i] = NULL;
         visitado[i] = false;
     }
 
-    for(int i=0; i<matriz->nodes; i++){
-        if(visitado[i]==false){
-            acharPontesRec(matriz, i, visitado, ordemDesc, low, pai, contador);
+    // Chamando a função recursiva de achar pontes com as variáveis declaradas
+//    for(int i=0; i<matriz->nodes; i++){
+//        if(visitado[i]==false){
+//            acharPontesRec(matriz, i, visitado, ordemDesc, low, pai, contador);
+//        }
+//    }
+    acharPontesRec(matriz, 0, visitado, ordemDesc, low, pai, contador);
+}
+
+void direcionarGrafo(adjMatrix *matriz)
+{
+    for(int i = 0; i < matriz->nodes-1; i++){
+        for(int j = i+1; j < matriz->nodes; j++){
+            if(matriz->v[i][j].type != '0'){
+                matriz->v[j][i].type = '0';
+                matriz->v[j][i].value = 0.0;
+            }
         }
     }
 }

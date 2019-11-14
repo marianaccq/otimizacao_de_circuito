@@ -35,5 +35,6 @@ void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes);
 int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[], int nodes);
 void acharPontesRec(adjMatrix *matriz, int u, bool visitado[], int ordemDesc[], int low[], int pais[], int &contador);
 void acharPontesUtil(adjMatrix *matriz);
+void direcionarGrafo(adjMatrix *matriz);
 
 #endif // UTIL_H
