@@ -28,10 +28,12 @@ struct Lista {
 void createAdjMatrix(adjMatrix *matriz, int nodes);
 void addComponente(adjMatrix *matriz, char type, float value, int n1, int n2);
 void printMatrix(adjMatrix *matriz, int nodes);
-void criar_lista(Lista *lista_adjacencia, int tamanho);
-void inserir_ligacao(Lista *lista_adjacencia, char type, int valor, int n1, int n2);
-void print_lista(Lista *lista_adjacencia);
+void criarLista(Lista *lista_adjacencia, int tamanho);
+void inserirLigacao(Lista *lista_adjacencia, char type, int valor, int n1, int n2);
+void printLista(Lista *lista_adjacencia);
 void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes);
 int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[], int nodes);
+void acharPontesRec(adjMatrix *matriz, int u, bool visitado[], int ordemDesc[], int low[], int pais[], int &contador);
+void acharPontesUtil(adjMatrix *matriz);
 
 #endif // UTIL_H

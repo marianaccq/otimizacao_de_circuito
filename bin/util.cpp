@@ -49,7 +49,7 @@ void printMatrix(adjMatrix *matriz, int nodes){
     cout<<"--------------------------"<<endl;
 }
 
-void criar_lista(Lista *lista_adjacencia, int tamanho) {
+void criarLista(Lista *lista_adjacencia, int tamanho) {
     lista_adjacencia->tamanho = tamanho;
 
     for (int i=0; i<tamanho; i++) {
@@ -59,7 +59,7 @@ void criar_lista(Lista *lista_adjacencia, int tamanho) {
     }
 }
 
-void inserir_ligacao(Lista *lista_adjacencia, char type, int valor, int n1, int n2) {
+void inserirLigacao(Lista *lista_adjacencia, char type, int valor, int n1, int n2) {
     No* novo_no = new No();
     novo_no->indice = n2;
     novo_no->type = type;
@@ -70,7 +70,7 @@ void inserir_ligacao(Lista *lista_adjacencia, char type, int valor, int n1, int 
     lista_adjacencia->lista[n1].proximo_no = novo_no;
 }
 
-void print_lista(Lista *lista_adjacencia){
+void printLista(Lista *lista_adjacencia){
     cout<<"Print Lista de Adjacencia"<<endl;
     cout<<"-------------------------"<<endl;
     for(int i=0; i<lista_adjacencia->tamanho; i++){
@@ -145,13 +145,61 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
             if(C->v[i][j].type != '0'){
                 D[k].v[i][j].type = C->v[i][j].type;
                 D[k].v[i][j].value = C->v[i][j].value;
-
+\
                 D[k].v[j][i].type = C->v[j][i].type;
                 D[k].v[j][i].value = C->v[j][i].value;
                 k++;
+
+                acharPontesUtil(&D[k]);
                 //procedimento de prunning aqui na matriz D[k]
             }
         }
     }
     return k;
+}
+
+void acharPontesRec(adjMatrix *matriz, int u, bool visitado[], int ordemDesc[], int low[], int pais[], int &contador)
+{
+    static int time = 0;
+
+    visitado[u] = true;
+    ordemDesc[u] = low[u] = ++time;
+
+    for(int i=0; i<matriz->nodes; i++){
+        if(matriz->v[u][i].type != '0'){
+            int v = i;
+
+            if(!visitado[v]){
+                pais[v] = u;
+                acharPontesRec(matriz, v, visitado, ordemDesc, low, pais, contador);
+
+                low[u] = min(low[u], low[v]);
+                if(low[v]>ordemDesc[u])
+                    addComponente(matriz, '0', 0.0, u, v);
+            }
+            else if(v != pais[u]){
+                low[u] = min(low[u], ordemDesc[v]);
+            }
+        }
+    }
+}
+
+void acharPontesUtil(adjMatrix *matriz)
+{
+    bool *visitado = new bool[matriz->nodes];
+    int *ordemDesc = new int[matriz->nodes];
+    int *low = new int[matriz->nodes];
+    int *pai = new int[matriz->nodes];
+    int contador = 0;
+
+    for(int i=0; i<matriz->nodes; i++){
+        pai[i] = NULL;
+        visitado[i] = false;
+    }
+
+    for(int i=0; i<matriz->nodes; i++){
+        if(visitado[i]==false){
+            acharPontesRec(matriz, i, visitado, ordemDesc, low, pai, contador);
+        }
+    }
 }

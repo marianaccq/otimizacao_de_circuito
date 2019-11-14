@@ -28,7 +28,6 @@ int main()
     printMatrix(matriz, n);
     printMatrix(B, n);
     printMatrix(C, n);
-    printMatrix(&D[0], n);
     cout<<"MATRIZES D: "<<endl;
     for(int i=0; i<k; i++){
         printMatrix(&D[i], n);
