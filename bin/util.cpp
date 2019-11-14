@@ -99,19 +99,11 @@ void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
     for (int i = 0; i < nodes; i++) {
         for(int j = 0; j < nodes; j++){
             if(matriz->v[i][j].type != '0' && C[i] == 1 && C[j] == 0){
-                result->v[i][j].type = matriz->v[i][j].type;
-                result->v[i][j].value = matriz->v[i][j].value;
-
-                result->v[j][i].type = matriz->v[j][i].type;
-                result->v[j][i].value = matriz->v[j][i].value;
+                addComponente(result, matriz->v[i][j].type, matriz->v[i][j].value, i, j);
                 C[j] = 1;
             }
             if(matriz->v[i][j].type != '0' && C[i] == 0 && C[j] == 1){
-                result->v[i][j].type = matriz->v[i][j].type;
-                result->v[i][j].value = matriz->v[i][j].value;
-
-                result->v[j][i].type = matriz->v[j][i].type;
-                result->v[j][i].value = matriz->v[j][i].value;
+                addComponente(result, matriz->v[i][j].type, matriz->v[i][j].value, i, j);
                 C[i] = 1;
             }
         }
@@ -138,17 +130,17 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
             aux->v[i][j].type = B->v[i][j].type;
         }
     }
+    // Iterando sobre a matriz C, achando uma aresta não nula, somando essa aresta a uma
+    // copia de B e atribuindo à D[k] essa nova matriz. Repete-se o processo até que se
+    // esgotem as arestas não nulas em C. Sendo assim, obteremos k matrizes D, onde cada
+    // uma dessas matrizes representa um ciclo fundamental do circuito. Em tese, k será
+    // sempre menor que n.
     int k = 0;
-    // Ver se os ranges desse i e j tao contidos dentro de n (pra n dar segmentation fault)
     for(int i = 0; i < nodes-1; i++){
         for(int j = i+1; j < nodes; j++){
             D[k] = *aux;
             if(C->v[i][j].type != '0'){
-                D[k].v[i][j].type = C->v[i][j].type;
-                D[k].v[i][j].value = C->v[i][j].value;
-\
-                D[k].v[j][i].type = C->v[j][i].type;
-                D[k].v[j][i].value = C->v[j][i].value;
+                addComponente(&D[k], C->v[i][j].type, C->v[i][j].value, i, j);
 
                 // Procedimento de prunning na matriz D[k]
                 // Onde k = numero de ramos que podem formar ciclos fundamentais

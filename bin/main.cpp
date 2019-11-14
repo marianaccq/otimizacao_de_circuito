@@ -8,13 +8,13 @@ int main()
     int n = 6;
     adjMatrix *matriz = new adjMatrix();
     createAdjMatrix(matriz, n);
-    addComponente(matriz, 'R', 2.0, 0, 1);
-    addComponente(matriz, 'I', 1.0, 1, 2);
-    addComponente(matriz, 'W', 0.0, 2, 3);
+    addComponente(matriz, 'V', 12.0, 0, 1);
+    addComponente(matriz, 'R', 2.0, 1, 2);
+    addComponente(matriz, 'R', 2.0, 2, 3);
     addComponente(matriz, 'W', 0.0, 3, 0);
     addComponente(matriz, 'W', 0.0, 2, 4);
     addComponente(matriz, 'W', 0.0, 3, 5);
-    addComponente(matriz, 'W', 0.0, 4, 5);
+    addComponente(matriz, 'R', 2.0, 4, 5);
 
     adjMatrix *B = new adjMatrix();
     adjMatrix *C = new adjMatrix();
