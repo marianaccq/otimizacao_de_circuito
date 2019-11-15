@@ -1,5 +1,6 @@
 #include <iostream>
 #include "util.h"
+#include "numericalrecipes.h"
 
 using namespace std;
 
@@ -18,13 +19,36 @@ int main()
 
     adjMatrix *B = new adjMatrix();
     adjMatrix *C = new adjMatrix();
-    //fazer adjMatrix *D[n]; pra testar
     adjMatrix D[n];
     createAdjMatrix(B, n);
     createAdjMatrix(C, n);
     int k=0;
 
     k=findFundamentalcycles(matriz, B, C, D, n);
+
+    float matrizResistencia[MAX][MAX];
+    float arrayVoltagem[MAX];
+    montarMatrizCircuito(D, k, n, matrizResistencia, arrayVoltagem);
+
+    int *indx;
+    float *d;
+    float b[MAX] = {12, 12};
+    //ludcmp(resultado, k, indx, d);
+    //lubksb(resultado, k, indx, b);
+
+    for(int i=0; i<k; i++){
+        for(int j=0; j<k; j++){
+            cout<<matrizResistencia[i][j]<<", ";
+        }
+        cout<<endl;
+    }
+
+    for(int i=0; i<k; i++){
+        cout<<arrayVoltagem[i]<<", ";
+    }
+    cout<<endl;
+
+
     printMatrix(matriz, n);
     printMatrix(B, n);
     printMatrix(C, n);

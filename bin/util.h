@@ -36,5 +36,9 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
 void acharPontesRec(adjMatrix *matriz, int u, bool visitado[], int ordemDesc[], int low[], int pais[], int &contador);
 void acharPontesUtil(adjMatrix *matriz);
 void direcionarGrafo(adjMatrix *matriz);
+void montarMatrizCircuito(adjMatrix D[], int k, int nodes, float matrizR[][MAX], float arrayV[]);
+float somarResistenciaCiclo(adjMatrix D[], int k, int nodes);
+float interseccionarResistencias(adjMatrix D[], int k1, int k2, int nodes);
+float somarTensaoCiclo(adjMatrix D[], int k, int nodes);
 
 #endif // UTIL_H

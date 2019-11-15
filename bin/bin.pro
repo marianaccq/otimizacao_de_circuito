@@ -5,7 +5,9 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
+        numericalrecipes.cpp \
         util.cpp
 
 HEADERS += \
+    numericalrecipes.h \
     util.h

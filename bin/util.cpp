@@ -158,10 +158,8 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
 
 void acharPontesRec(adjMatrix *matriz, int u, bool visitado[], int ordemDesc[], int low[], int pais[], int &contador)
 {
-    static int time = 0;
-
     visitado[u] = true;
-    ordemDesc[u] = low[u] = ++time;
+    ordemDesc[u] = low[u] = ++contador;
 
     for(int i=0; i<matriz->nodes; i++){
         if(matriz->v[u][i].type != '0'){
@@ -197,23 +195,80 @@ void acharPontesUtil(adjMatrix *matriz)
         visitado[i] = false;
     }
 
-    // Chamando a função recursiva de achar pontes com as variáveis declaradas
-//    for(int i=0; i<matriz->nodes; i++){
-//        if(visitado[i]==false){
-//            acharPontesRec(matriz, i, visitado, ordemDesc, low, pai, contador);
-//        }
-//    }
     acharPontesRec(matriz, 0, visitado, ordemDesc, low, pai, contador);
 }
 
 void direcionarGrafo(adjMatrix *matriz)
 {
-    for(int i = 0; i < matriz->nodes-1; i++){
-        for(int j = i+1; j < matriz->nodes; j++){
-            if(matriz->v[i][j].type != '0'){
+    int visitado[MAX][MAX] = {0};
+    int aux;
+    for(int i = 0; i < matriz->nodes; i++){
+        for(int j = 0; j < matriz->nodes; j++){
+            if(matriz->v[i][j].type != '0' and visitado[i][j] == 0){
                 matriz->v[j][i].type = '0';
                 matriz->v[j][i].value = 0.0;
+                visitado[i][j] = 1;
+                visitado[j][i] = 1;
+
+                i = j;
+                j = -1;
             }
         }
     }
 }
+
+void montarMatrizCircuito(adjMatrix D[], int k, int nodes, float matrizR[][MAX], float arrayT[])
+{
+    for(int i=0; i<k; i++){
+        for(int j=i; j<k; j++){
+            if(i==j){
+                matrizR[i][j] = somarResistenciaCiclo(D, i, nodes);
+            }
+            else{
+                matrizR[i][j] = interseccionarResistencias(D, i, j, nodes);
+                matrizR[j][i] = matrizR[i][j];
+            }
+        }
+
+        arrayT[i] = somarTensaoCiclo(D, i, nodes);
+    }
+}
+
+float somarResistenciaCiclo(adjMatrix D[], int k, int nodes){
+    float somaResistores = 0;
+
+    for(int i=0; i<nodes; i++){
+        for(int j=0; j<nodes; j++){
+            if(D[k].v[i][j].type == 'R'){
+                somaResistores += D[k].v[i][j].value;
+            }
+        }
+    }
+    return somaResistores;
+}
+
+float interseccionarResistencias(adjMatrix D[], int k1, int k2, int nodes){
+    int somaResistores = 0;
+    for(int i=0; i<nodes; i++){
+        for(int j=0; j<nodes; j++){
+            if(D[k1].v[i][j].type == 'R' and D[k2].v[i][j].type == 'R'){
+                somaResistores += D[k1].v[i][j].value;
+            }
+        }
+    }
+    return -somaResistores;
+}
+
+float somarTensaoCiclo(adjMatrix D[], int k, int nodes){
+    float somaTensao = 0;
+
+    for(int i=0; i<nodes; i++){
+        for(int j=0; j<nodes; j++){
+            if(D[k].v[i][j].type == 'V'){
+                somaTensao += D[k].v[i][j].value;
+            }
+        }
+    }
+    return somaTensao;
+}
+
