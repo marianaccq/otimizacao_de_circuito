@@ -272,14 +272,23 @@ float somarTensaoCiclo(adjMatrix D[], int k, int nodes){
     return somaTensao;
 }
 
+/*
+ * A função resolverSistema é baseada no código de Matey Glishev, disponível
+ * em https://stackoverflow.com/a/37702796/10209945
+ */
 void resolverSistema(float a[][MAX], float b[], int n, float x[])
 {
+    // Criando uma matrix auxiliar de tamanho n * n+1
+    // Essa matriz será usada para guardar a  matriz "a" n * n
+    // Juntamente com o vetor b de tamanho n, caracterizando um
+    // Sistema linear do tipo a*x = b onde x = correntes de malha do circuito
     float aux[MAX][MAX] = {0};
     for(int i=0; i<n; i++){
         for(int j=0; j<n; j++){
             aux[i][j] = a[i][j];
         }
     }
+    // Atribuindo à ultima coluna da matrix auxiliar o vetor b
     for(int i=0; i<n; i++){
         aux[i][n] = b[i];
         x[i] = 0;

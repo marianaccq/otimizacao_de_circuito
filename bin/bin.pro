@@ -5,7 +5,6 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
-        numericalrecipes.cpp \
         parser.cpp \
         util.cpp
 

@@ -7,26 +7,26 @@ using namespace std;
 
 int main()
 {
-//    int n = 8;
+    int n = 8;
     adjMatrix *matriz = new adjMatrix();
 
-    Parser leitor_dados(matriz);
-    leitor_dados.tratamento();
-    int n = leitor_dados.getNodes();
+//    Parser leitor_dados(matriz);
+//    leitor_dados.tratamento();
+//    int n = leitor_dados.getNodes();
 
 
 
-/*   //ISSO AQUI NÃO VAI EXISTIR
+   //ISSO AQUI NÃO VAI EXISTIR 3.34 3.46
     createAdjMatrix(matriz, n);
-    addComponente(matriz, 'V',  12.0, 0, 1);
-    addComponente(matriz, 'R',  3.0, 1, 2);
-    addComponente(matriz, 'R',  4.0, 2, 3);
-    addComponente(matriz, 'R',  1.0, 3, 0);
-    addComponente(matriz, 'W',  0.0, 2, 4);
+    addComponente(matriz, 'V',  10.0, 0, 1);
+    addComponente(matriz, 'W',  0.0, 1, 2);
+    addComponente(matriz, 'R',  3.0, 2, 3);
+    addComponente(matriz, 'W',  0.0, 3, 0);
+    addComponente(matriz, 'R',  4.0, 2, 4);
     addComponente(matriz, 'W',  0.0, 3, 5);
-    addComponente(matriz, 'R',  8.0, 4, 5);
-    addComponente(matriz, 'R',  8.0, 4, 6);
-    addComponente(matriz, 'W',  0.0, 6, 7);
+    addComponente(matriz, 'R',  6.0, 4, 5);
+    addComponente(matriz, 'W',  0.0, 4, 6);
+    addComponente(matriz, 'R',  2.0, 6, 7);
     addComponente(matriz, 'W',  0.0, 7, 5);
     //ISSO AQUI NÃO VAI EXISTIR */
 
@@ -46,11 +46,6 @@ int main()
     montarMatrizCircuito(D, k, n, matrizResistencia, arrayVoltagem);
 
     float x[MAX] = {0};
-    float *d;
-    float b[MAX] = {12, 12};
-    //ludcmp(resultado, k, indx, d);
-    //lubksb(resultado, k, indx, b);
-    resolverSistema(matrizResistencia, arrayVoltagem, k, x);
 
     for(int i=0; i<k; i++){
         for(int j=0; j<k; j++){
@@ -59,9 +54,15 @@ int main()
         cout<<endl;
     }
 
+
+    resolverSistema(matrizResistencia, arrayVoltagem, k, x);
+
+    cout<<endl<<"Vetor de resultados:"<<endl;
+    cout<< "| I1 | " << "I2 | "<< "I3 | "<<endl;
     for(int i=0; i<k; i++){
-        cout<<x[i]<<", ";
+        cout<<"| "<<x[i]<<" ";
     }
+    cout<<" |";
     cout<<endl;
 
 
