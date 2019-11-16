@@ -10,13 +10,14 @@ using namespace std;
 class Parser {
 
 private:
-    adjMatrix matriz_componentes;
-    string caminho;
+    adjMatrix *matriz_componentes;
+    int n;  //tamanho da matriz;
 
 public:
         Parser();
-        Parser(string _caminho);
-        void tratamento(string _caminho);
+        void tratamento();
+        int getTamanho_matriz();
+        Parser(adjMatrix *matriz);
 
 
 };

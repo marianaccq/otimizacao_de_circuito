@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "util.h"
 #include <iostream>
 #include <fstream>  //para o ifstream
 #include <sstream>  //para o stringstream
@@ -6,32 +7,60 @@
 
 Parser::Parser() { }
 
-Parser::Parser(string _caminho) {
-    caminho = _caminho;
+Parser::Parser(adjMatrix *matriz) {
+    matriz_componentes = matriz;
 }
 
-void Parser::tratamento(string _caminho) {
-    caminho = _caminho;
+void Parser::tratamento() {
 
-    ifstream fin;       //objeto conectado ao fluxo de saída;
-    string linha;       //linha de comando encontrada no arquivo .txt
-    string cmd;         //comando encontrado no arquivo .txt
-    stringstream ss;    //objeto responsável pela leitura de cada palavra do arquivo de texto
+    fstream fin;       //objeto conectado ao fluxo de saída;
+    string linha, filename;
+    stringstream ss;
+
+    filename = "instrucoes";
 
     //abrindo o fluxo para o arquivo de .txt
-    fin.open(caminho);
+    fin.open("./" + filename + ".txt");
     if(!fin.is_open()) {
-        cout << "Falha na abertura do arquivo. Caminho especificado correto? \n";
+        cout << "Falha na abertura do arquivo. Caminho especificado incorreto. \n";
+        exit(0);
     }
 
     //aqui comeca a leitura das linhas
     while (fin.good()) {
         getline(fin, linha);    //lê a linha;
+        ss.clear();
+        ss.str(linha);
+        ss >> linha;
 
-        if(!fin.good()) {       //caso em que tentei ler a linha, mas não tinha nada;
-            break;
+        if (linha.compare("dim") == 0){
+            int nodes;
+            ss >> nodes;
+
+            createAdjMatrix(matriz_componentes, nodes);
+
+        } else if (linha.compare("r") == 0 || linha.compare("R") == 0){
+            float valor;
+            int no1, no2;
+
+            ss >> valor >> no1 >> no2;
+
+
+
+        } else if (linha.compare("v") == 0 || linha.compare("V") == 0) {
+            float valor;
+            int no1, no2;
+
+            ss >> valor >> no1 >> no2;
+        } else {
+            cout << "Erro na leitura do arquivo!";
+            exit(0);
         }
-
     }
+
+
 }
 
+int Parser::getTamanho_matriz() {
+    return n;
+}
