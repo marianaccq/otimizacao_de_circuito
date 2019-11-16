@@ -7,14 +7,16 @@ using namespace std;
 
 int main()
 {
-    int n = 6;
+//    int n = 6;
     adjMatrix *matriz = new adjMatrix();
 
     Parser leitor_dados(matriz);
+    leitor_dados.tratamento();
+    int n = leitor_dados.getNodes();
     /* a minha atribuição de valores a matriz vem aqui */
 
 
-    //ISSO AQUI NÃO VAI EXISTIR
+/*    //ISSO AQUI NÃO VAI EXISTIR
     createAdjMatrix(matriz, n);
     addComponente(matriz, 'V', 12.0, 0, 1);
     addComponente(matriz, 'R', 2.0, 1, 2);
@@ -23,7 +25,7 @@ int main()
     addComponente(matriz, 'W', 0.0, 2, 4);
     addComponente(matriz, 'W', 0.0, 3, 5);
     addComponente(matriz, 'R', 2.0, 4, 5);
-    //ISSO AQUI NÃO VAI EXISTIR
+    //ISSO AQUI NÃO VAI EXISTIR */
 
 
 

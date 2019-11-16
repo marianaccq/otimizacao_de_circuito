@@ -10,12 +10,15 @@ using namespace std;
 class Parser {
 
 private:
-    adjMatrix *matriz_componentes;
+    int n;
+
 
 public:
     Parser();
     Parser(adjMatrix *matriz);
     void tratamento();
+    adjMatrix *matriz_componentes;
+    int getNodes();
 
 };
 

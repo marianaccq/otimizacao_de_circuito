@@ -37,6 +37,8 @@ void Parser::tratamento() {
             int nodes;
             ss >> nodes;
 
+            n = nodes;
+
             createAdjMatrix(matriz_componentes, nodes);
 
         } else if (linha.compare("r") == 0 || linha.compare("R") == 0){
@@ -70,4 +72,8 @@ void Parser::tratamento() {
     }
 
 
+}
+
+int Parser::getNodes() {
+    return n;
 }
