@@ -20,7 +20,7 @@ void Parser::tratamento() {
     filename = "instrucoes";
 
     //abrindo o fluxo para o arquivo de .txt
-    fin.open("./" + filename + ".txt");
+    fin.open("./../" + filename + ".txt");
     if(!fin.is_open()) {
         cout << "Falha na abertura do arquivo. Caminho especificado incorreto. \n";
         exit(0);
@@ -57,7 +57,7 @@ void Parser::tratamento() {
 
             addComponente(matriz_componentes, 'V', valor, no1, no2);
 
-        } else if (linha.compare("W") == 0 || linha.compare("w") == 0) {
+        } else if (linha.compare("w") == 0 || linha.compare("W") == 0) {
            float valor;
            int no1, no2;
 
@@ -66,7 +66,7 @@ void Parser::tratamento() {
            addComponente(matriz_componentes, 'W', valor, no1, no2);
 
         } else {
-            cout << "Erro na leitura do arquivo!";
+            cout << "Erro na leitura do arquivo! rolê: "<<linha;
             exit(0);
         }
     }

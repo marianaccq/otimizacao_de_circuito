@@ -40,5 +40,6 @@ void montarMatrizCircuito(adjMatrix D[], int k, int nodes, float matrizR[][MAX],
 float somarResistenciaCiclo(adjMatrix D[], int k, int nodes);
 float interseccionarResistencias(adjMatrix D[], int k1, int k2, int nodes);
 float somarTensaoCiclo(adjMatrix D[], int k, int nodes);
+void resolverSistema(float a[][MAX], float b[], int n, float x[]);
 
 #endif // UTIL_H

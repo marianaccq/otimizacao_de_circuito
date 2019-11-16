@@ -256,7 +256,7 @@ float interseccionarResistencias(adjMatrix D[], int k1, int k2, int nodes){
             }
         }
     }
-    return -somaResistores;
+    return somaResistores;
 }
 
 float somarTensaoCiclo(adjMatrix D[], int k, int nodes){
@@ -272,3 +272,35 @@ float somarTensaoCiclo(adjMatrix D[], int k, int nodes){
     return somaTensao;
 }
 
+void resolverSistema(float a[][MAX], float b[], int n, float x[])
+{
+    float aux[MAX][MAX] = {0};
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            aux[i][j] = a[i][j];
+        }
+    }
+    for(int i=0; i<n; i++){
+        aux[i][n] = b[i];
+        x[i] = 0;
+    }
+
+    // Triangularização
+    for (int i = 0; i < n - 1; i++){
+        for (int h = i + 1; h < n+1; h++){
+            double t = aux[h][i] / aux[i][i];
+            for (int j = 0; j <= n; j++){
+                aux[h][j] = aux[h][j] - t * aux[i][j];
+            }
+        }
+    }
+
+    // Resolução
+    for (int i = n - 1; i >= 0; i--){
+        x[i] = aux[i][n];
+        for (int j = n - 1; j > i; j--){
+            x[i] = x[i] - aux[i][j] * x[j];
+        }
+        x[i] = x[i] / aux[i][i];
+    }
+}

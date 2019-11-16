@@ -42,11 +42,12 @@ int main()
     float arrayVoltagem[MAX];
     montarMatrizCircuito(D, k, n, matrizResistencia, arrayVoltagem);
 
-    int *indx;
+    float x[MAX] = {0};
     float *d;
     float b[MAX] = {12, 12};
     //ludcmp(resultado, k, indx, d);
     //lubksb(resultado, k, indx, b);
+    resolverSistema(matrizResistencia, arrayVoltagem, k, x);
 
     for(int i=0; i<k; i++){
         for(int j=0; j<k; j++){
@@ -56,7 +57,7 @@ int main()
     }
 
     for(int i=0; i<k; i++){
-        cout<<arrayVoltagem[i]<<", ";
+        cout<<x[i]<<", ";
     }
     cout<<endl;
 
