@@ -45,13 +45,24 @@ void Parser::tratamento() {
 
             ss >> valor >> no1 >> no2;
 
-
+            addComponente(matriz_componentes, 'R', valor, no1, no2);
 
         } else if (linha.compare("v") == 0 || linha.compare("V") == 0) {
             float valor;
             int no1, no2;
 
             ss >> valor >> no1 >> no2;
+
+            addComponente(matriz_componentes, 'V', valor, no1, no2);
+
+        } else if (linha.compare("W") == 0 || linha.compare("w") == 0) {
+           float valor;
+           int no1, no2;
+
+           ss >> valor >> no1 >> no2;
+
+           addComponente(matriz_componentes, 'W', valor, no1, no2);
+
         } else {
             cout << "Erro na leitura do arquivo!";
             exit(0);
@@ -59,8 +70,4 @@ void Parser::tratamento() {
     }
 
 
-}
-
-int Parser::getTamanho_matriz() {
-    return n;
 }

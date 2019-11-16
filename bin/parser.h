@@ -11,14 +11,11 @@ class Parser {
 
 private:
     adjMatrix *matriz_componentes;
-    int n;  //tamanho da matriz;
 
 public:
-        Parser();
-        void tratamento();
-        int getTamanho_matriz();
-        Parser(adjMatrix *matriz);
-
+    Parser();
+    Parser(adjMatrix *matriz);
+    void tratamento();
 
 };
 
