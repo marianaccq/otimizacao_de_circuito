@@ -66,7 +66,7 @@ void Parser::tratamento() {
            addComponente(matriz_componentes, 'W', valor, no1, no2);
 
         } else {
-            cout << "Erro na leitura do arquivo! rolê: "<<linha;
+            cout << "Erro na leitura do arquivo!";
             exit(0);
         }
     }
