@@ -6,8 +6,10 @@ CONFIG -= qt
 SOURCES += \
         main.cpp \
         numericalrecipes.cpp \
+        parser.cpp \
         util.cpp
 
 HEADERS += \
     numericalrecipes.h \
+    parser.h \
     util.h
