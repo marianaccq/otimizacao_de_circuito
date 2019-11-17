@@ -9,6 +9,5 @@ SOURCES += \
         util.cpp
 
 HEADERS += \
-    numericalrecipes.h \
     parser.h \
     util.h

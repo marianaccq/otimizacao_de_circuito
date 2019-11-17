@@ -1,6 +1,5 @@
 #include <iostream>
 #include "util.h"
-#include "numericalrecipes.h"
 #include "parser.h"
 
 using namespace std;
@@ -16,7 +15,7 @@ int main()
 
 
 
-   //ISSO AQUI NÃO VAI EXISTIR 3.34 3.46
+/*  //ISSO AQUI NÃO VAI EXISTIR 3.34 3.46
     createAdjMatrix(matriz, n);
     addComponente(matriz, 'V',  10.0, 0, 1);
     addComponente(matriz, 'W',  0.0, 1, 2);
@@ -34,7 +33,7 @@ int main()
     adjMatrix *B = new adjMatrix();
     adjMatrix *C = new adjMatrix();
 
-    adjMatrix D[n];
+    adjMatrix D[MAX];
     createAdjMatrix(B, n);
     createAdjMatrix(C, n);
     int k=0;
