@@ -20,19 +20,29 @@ void createAdjMatrix(adjMatrix *matriz, int nodes){
  * problema, à matriz de adjacência.
  */
 void addComponente(adjMatrix *matriz, char type, float value, int n1, int n2){
+    bool polN1N2 = true;
+    if(type == 'v' or type == 'V'){
+        if(n1 < n2){
+            polN1N2 = true;
+        } else {
+            polN1N2 = false;
+        }
+    }
+
     matriz->v[n1][n2].type = type;
     matriz->v[n1][n2].value = value;
+    matriz->v[n2][n1].polN1N2 = polN1N2;
     //não faz sentido colacar um if para o caso de n1 == n2, pois não faz sentido ligar
     //um nó nele mesmo!
     matriz->v[n2][n1].type = type;
     matriz->v[n2][n1].value = value;
+    matriz->v[n2][n1].polN1N2 = polN1N2;
 }
 /*
  * Esta função percorre a matriz de adjacência e exibe todos os seus elementos.
  * Para o caso do grafo modelar um circuito, ela exibe o tipo do elemento e seu valor.
  */
 void printMatrix(adjMatrix *matriz, int nodes){
-    cout<<"Print Matriz de Adjacencia"<<endl;
     cout<<"--------------------------"<<endl;
     for(int i=0; i<nodes; i++){
         for(int j=0; j<nodes; j++){
@@ -85,7 +95,9 @@ void printLista(Lista *lista_adjacencia){
     }
     cout<<"-------------------------"<<endl;
 }
-
+/*
+ * Esta função acha uma arvore geradora qualquer do grafo que representa um circuito
+ */
 void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
     int C[MAX] = {0};
     C[0] = 1;
@@ -112,7 +124,7 @@ void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
 /*
  * Esta função deve retornar o número de circuitos fundamentais formados.
  * Usando 4 matrizes, A, B, C e D, onde A é a matriz de adjacência original, B é a matriz de adjacência da árvore geradora
- *
+ * C é a matriz obtida da subtração A-B, e D é um array de k matrizes, onde k é a quantidade de ramos em C (quantidade de ciclos do circuito).
  */
 int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[], int nodes){
 
@@ -142,7 +154,7 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
             if(C->v[i][j].type != '0'){
                 addComponente(&D[k], C->v[i][j].type, C->v[i][j].value, i, j);
 
-                // Procedimento de prunning na matriz D[k]
+                // Procedimento de "prunning" na matriz D[k]
                 // Onde k = numero de ramos que podem formar ciclos fundamentais
                 acharPontesUtil(&D[k]);
                 // Transformar o grafo em direcionado
@@ -198,6 +210,8 @@ void acharPontesUtil(adjMatrix *matriz)
     acharPontesRec(matriz, 0, visitado, ordemDesc, low, pai, contador);
 }
 
+// Percorrendo os vertices do grafico em ordem apagando o simétrico de cada aresta,
+// ou seja, criando uma "corrente" através do direcionamento
 void direcionarGrafo(adjMatrix *matriz)
 {
     int visitado[MAX][MAX] = {0};
@@ -217,6 +231,7 @@ void direcionarGrafo(adjMatrix *matriz)
     }
 }
 
+// Montando a matriz de resistencias e o vetor de tensões baseando-se nas leis físicas da eletrônica.
 void montarMatrizCircuito(adjMatrix D[], int k, int nodes, float matrizR[][MAX], float arrayT[])
 {
     for(int i=0; i<k; i++){
@@ -265,7 +280,11 @@ float somarTensaoCiclo(adjMatrix D[], int k, int nodes){
     for(int i=0; i<nodes; i++){
         for(int j=0; j<nodes; j++){
             if(D[k].v[i][j].type == 'V'){
-                somaTensao += D[k].v[i][j].value;
+                if((i<j && D[k].v[i][j].polN1N2) or (i>j && !D[k].v[i][j].polN1N2)){
+                    somaTensao -= D[k].v[i][j].value;
+                } else{
+                    somaTensao += D[k].v[i][j].value;
+                }
             }
         }
     }
