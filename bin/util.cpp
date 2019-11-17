@@ -19,24 +19,24 @@ void createAdjMatrix(adjMatrix *matriz, int nodes){
  * Esta função adiciona um componente, ou seja, um elemento de circuito como já foi definido na modelagem do
  * problema, à matriz de adjacência.
  */
-void addComponente(adjMatrix *matriz, char type, float value, int n1, int n2){
-    bool polN1N2 = true;
-    if(type == 'v' or type == 'V'){
-        if(n1 < n2){
-            polN1N2 = true;
-        } else {
-            polN1N2 = false;
-        }
+void addComponente(adjMatrix *matriz, char type, float value, int n1, int n2, bool *polN1N2){
+    if(polN1N2 != nullptr){
+        matriz->v[n1][n2].polN1N2 = *polN1N2;
+        matriz->v[n2][n1].polN1N2 = *polN1N2;
     }
-
+//    if(type == 'v' or type == 'V'){
+//        if(n1 < n2){
+//            *polN1N2 = true;
+//        } else {
+//            *polN1N2 = false;
+//        }
+//    }
     matriz->v[n1][n2].type = type;
     matriz->v[n1][n2].value = value;
-    matriz->v[n2][n1].polN1N2 = polN1N2;
     //não faz sentido colacar um if para o caso de n1 == n2, pois não faz sentido ligar
     //um nó nele mesmo!
     matriz->v[n2][n1].type = type;
     matriz->v[n2][n1].value = value;
-    matriz->v[n2][n1].polN1N2 = polN1N2;
 }
 /*
  * Esta função percorre a matriz de adjacência e exibe todos os seus elementos.
@@ -111,11 +111,11 @@ void findSpanningTree(adjMatrix *matriz, adjMatrix *result, int nodes){
     for (int i = 0; i < nodes; i++) {
         for(int j = 0; j < nodes; j++){
             if(matriz->v[i][j].type != '0' && C[i] == 1 && C[j] == 0){
-                addComponente(result, matriz->v[i][j].type, matriz->v[i][j].value, i, j);
+                addComponente(result, matriz->v[i][j].type, matriz->v[i][j].value, i, j, &matriz->v[i][j].polN1N2);
                 C[j] = 1;
             }
             if(matriz->v[i][j].type != '0' && C[i] == 0 && C[j] == 1){
-                addComponente(result, matriz->v[i][j].type, matriz->v[i][j].value, i, j);
+                addComponente(result, matriz->v[i][j].type, matriz->v[i][j].value, i, j, &matriz->v[i][j].polN1N2);
                 C[i] = 1;
             }
         }
@@ -137,9 +137,11 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
             if(B->v[i][j].type != '0'){
                 C->v[i][j].value = 0.0;
                 C->v[i][j].type = '0';
+                C->v[i][j].polN1N2 = false;
             }
             aux->v[i][j].value = B->v[i][j].value;
             aux->v[i][j].type = B->v[i][j].type;
+            aux->v[i][j].polN1N2 = B->v[i][j].polN1N2;
         }
     }
     // Iterando sobre a matriz C, achando uma aresta não nula, somando essa aresta a uma
@@ -280,10 +282,10 @@ float somarTensaoCiclo(adjMatrix D[], int k, int nodes){
     for(int i=0; i<nodes; i++){
         for(int j=0; j<nodes; j++){
             if(D[k].v[i][j].type == 'V'){
-                if((i<j && D[k].v[i][j].polN1N2) or (i>j && !D[k].v[i][j].polN1N2)){
-                    somaTensao -= D[k].v[i][j].value;
-                } else{
+                if((i<j && D[k].v[i][j].polN1N2==true) or (i>j && D[k].v[i][j].polN1N2==false)){
                     somaTensao += D[k].v[i][j].value;
+                } else{
+                    somaTensao -= D[k].v[i][j].value;
                 }
             }
         }

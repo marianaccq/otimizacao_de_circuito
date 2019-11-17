@@ -6,35 +6,39 @@ using namespace std;
 
 int main()
 {
-    //int n = 8;
+//    int n = 8;
     adjMatrix *matriz = new adjMatrix();
 
     Parser leitor_dados(matriz);
-    leitor_dados.tratamento("instrucoes-12n");
+    leitor_dados.tratamento("teste_8-2_circuito");
     int n = leitor_dados.getNodes();
 
 
-    //ISSO AQUI NÃO VAI EXISTIR 3.34 3.46
+    // TRECHO USADO APENAS PARA TESTES RAPIDOS
+//    bool *poltrue = new bool();
+//    bool *polfalse = new bool();
+//    *poltrue = true;
+//    *polfalse = false;
 //    createAdjMatrix(matriz, n);
-//    addComponente(matriz, 'V',  10.0, 0, 1);
-//    addComponente(matriz, 'W',  0.0, 1, 2);
-//    addComponente(matriz, 'R',  3.0, 2, 3);
-//    addComponente(matriz, 'W',  0.0, 3, 0);
-//    addComponente(matriz, 'R',  4.0, 2, 4);
-//    addComponente(matriz, 'W',  0.0, 3, 5);
-//    addComponente(matriz, 'R',  6.0, 4, 5);
-//    addComponente(matriz, 'W',  0.0, 4, 6);
-//    addComponente(matriz, 'R',  2.0, 6, 7);
+//    addComponente(matriz, 'V',  12.0, 0, 1, poltrue);
+//    addComponente(matriz, 'R',  3.0, 1, 2);
+//    addComponente(matriz, 'R',  4.0, 2, 3);
+//    addComponente(matriz, 'R',  1.0, 3, 0);
+//    addComponente(matriz, 'W',  0.0, 2, 4);
+//    addComponente(matriz, 'V',  6.0, 5, 3, polfalse);
+//    addComponente(matriz, 'R',  8.0, 4, 5);
+//    addComponente(matriz, 'R',  8.0, 4, 6);
+//    addComponente(matriz, 'W',  0.0, 6, 7);
 //    addComponente(matriz, 'W',  0.0, 7, 5);
-    //ISSO AQUI NÃO VAI EXISTIR */
+    // TRECHO USADO APENAS PARA TESTES RAPIDOS
 
 
     adjMatrix *B = new adjMatrix();
     adjMatrix *C = new adjMatrix();
 
     adjMatrix D[n];
-    createAdjMatrix(B, n);
-    createAdjMatrix(C, n);
+    //createAdjMatrix(B, n);
+    //createAdjMatrix(C, n);
     int k=0;
 
     k=findFundamentalcycles(matriz, B, C, D, n);

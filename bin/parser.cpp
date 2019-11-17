@@ -52,10 +52,17 @@ void Parser::tratamento(string filename) {
         } else if (linha.compare("v") == 0 || linha.compare("V") == 0) {
             float valor;
             int no1, no2;
+            bool *polN1N2 = new bool();
 
             ss >> valor >> no1 >> no2;
 
-            addComponente(matriz_componentes, 'V', valor, no1, no2);
+            if(no1 < no2){
+                *polN1N2 = true;
+            } else {
+                *polN1N2 = false;
+            }
+
+            addComponente(matriz_componentes, 'V', valor, no1, no2, polN1N2);
 
         } else if (linha.compare("w") == 0 || linha.compare("W") == 0) {
            float valor;

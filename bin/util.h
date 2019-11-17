@@ -1,7 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 // Header para a definição de algumas funções e structs úteis no tratamento das nossas estruturas
-#define MAX 100
+#define MAX 200
 
 struct componente{
     char type;
@@ -27,7 +27,7 @@ struct Lista {
 };
 
 void createAdjMatrix(adjMatrix *matriz, int nodes);
-void addComponente(adjMatrix *matriz, char type, float value, int n1, int n2);
+void addComponente(adjMatrix *matriz, char type, float value, int n1, int n2, bool *polN1N2 = nullptr);
 void printMatrix(adjMatrix *matriz, int nodes);
 void criarLista(Lista *lista_adjacencia, int tamanho);
 void inserirLigacao(Lista *lista_adjacencia, char type, int valor, int n1, int n2);
