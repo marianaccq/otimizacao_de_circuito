@@ -11,13 +11,13 @@ Parser::Parser(adjMatrix *matriz) {
     matriz_componentes = matriz;
 }
 
-void Parser::tratamento() {
+void Parser::tratamento(string filename) {
 
     fstream fin;       //objeto conectado ao fluxo de saída;
-    string linha, filename;
+    string linha;
     stringstream ss;
 
-    filename = "instrucoes";
+    //filename = "instrucoes";
 
     //abrindo o fluxo para o arquivo de .txt
     fin.open("./../" + filename + ".txt");

@@ -16,7 +16,7 @@ private:
 public:
     Parser();
     Parser(adjMatrix *matriz);
-    void tratamento();
+    void tratamento(string filename);
     adjMatrix *matriz_componentes;
     int getNodes();
 

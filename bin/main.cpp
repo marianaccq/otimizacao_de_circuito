@@ -10,7 +10,7 @@ int main()
     adjMatrix *matriz = new adjMatrix();
 
     Parser leitor_dados(matriz);
-    leitor_dados.tratamento();
+    leitor_dados.tratamento("instrucoes-12n");
     int n = leitor_dados.getNodes();
 
 
