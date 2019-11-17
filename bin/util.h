@@ -6,6 +6,7 @@
 struct componente{
     char type;
     float value;
+    bool polN1N2;
 };
 
 struct adjMatrix{
