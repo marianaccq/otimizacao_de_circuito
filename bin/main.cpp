@@ -10,7 +10,7 @@ int main()
     adjMatrix *matriz = new adjMatrix();
 
     Parser leitor_dados(matriz);
-    leitor_dados.tratamento("teste_63_circuito");
+    leitor_dados.tratamento("teste_8-2_circuito");
     int n = leitor_dados.getNodes();
 
 
@@ -66,13 +66,9 @@ int main()
 
     cout<<endl<<"Vetor de resultados:"<<endl;
     for(int i=0; i<k; i++){
-        cout<<"| I"<<i<<" ";
+        cout<<"| I"<<i<<" = "<<x[i]<<"A ";
     }
-    cout<<" |"<<endl;
-    for(int i=0; i<k; i++){
-        cout<<"| "<<x[i]<<" ";
-    }
-    cout<<" |";
+    cout<<"|";
     cout<<endl;
     cout<<endl;
 
