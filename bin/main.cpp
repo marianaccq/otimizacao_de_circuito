@@ -10,7 +10,7 @@ int main()
     adjMatrix *matriz = new adjMatrix();
 
     Parser leitor_dados(matriz);
-    leitor_dados.tratamento("teste_8-2_circuito");
+    leitor_dados.tratamento("teste_63_circuito");
     int n = leitor_dados.getNodes();
 
 
