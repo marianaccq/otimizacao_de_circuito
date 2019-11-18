@@ -7,8 +7,16 @@ using namespace std;
 int main()
 {
 //    int n = 8;
+
     adjMatrix *matriz = new adjMatrix();
 
+    // Código para gerar um circuito com m1*m2 nós
+//    int m1 = 6;
+//    int m2 = 6;
+//    int n = m1*m2;
+//    gerarMatrizAdj(matriz, m1, m2);
+
+    // Código para ler um circuito de um .txt definido pelo usuário
     Parser leitor_dados(matriz);
     leitor_dados.tratamento("teste_8-2_circuito");
     int n = leitor_dados.getNodes();
@@ -32,14 +40,13 @@ int main()
 //    addComponente(matriz, 'W',  0.0, 7, 5);
     // TRECHO USADO APENAS PARA TESTES RAPIDOS
 
+    printMatrix(matriz, n);
+    cout<<endl;
 
     adjMatrix *B = new adjMatrix();
     adjMatrix *C = new adjMatrix();
 
     adjMatrix D[n];
-    for(int i=0; i<n; i++){
-        createAdjMatrix(&D[i], n);
-    }
     createAdjMatrix(B, n);
     createAdjMatrix(C, n);
     int k=0;

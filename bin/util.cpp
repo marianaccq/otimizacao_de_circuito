@@ -1,5 +1,6 @@
 #include <iostream>
 #include "util.h"
+#include "stdlib.h"
 
 using namespace std;
 
@@ -264,7 +265,7 @@ float somarResistenciaCiclo(adjMatrix D[], int k, int nodes){
 
     for(int i=0; i<nodes; i++){
         for(int j=0; j<nodes; j++){
-            if(D[k].v[i][j].type == 'R'){
+            if(D[k].v[i][j].type == 'R' or D[k].v[i][j].type == 'r'){
                 somaResistores += D[k].v[i][j].value;
             }
         }
@@ -276,7 +277,7 @@ float interseccionarResistencias(adjMatrix D[], int k1, int k2, int nodes){
     int somaResistores = 0;
     for(int i=0; i<nodes; i++){
         for(int j=0; j<nodes; j++){
-            if(D[k1].v[i][j].type == 'R' and D[k2].v[i][j].type == 'R'){
+            if((D[k1].v[i][j].type == 'R' or D[k1].v[i][j].type == 'r') and (D[k2].v[i][j].type == 'R' or D[k2].v[i][j].type == 'r')){
                 somaResistores += D[k1].v[i][j].value;
             }
         }
@@ -289,7 +290,7 @@ float somarTensaoCiclo(adjMatrix D[], int k, int nodes){
 
     for(int i=0; i<nodes; i++){
         for(int j=0; j<nodes; j++){
-            if(D[k].v[i][j].type == 'V'){
+            if(D[k].v[i][j].type == 'V' or D[k].v[i][j].type == 'v'){
                 if((i<j && D[k].v[i][j].polN1N2==true) or (i>j && D[k].v[i][j].polN1N2==false)){
                     somaTensao += D[k].v[i][j].value;
                 } else{
@@ -356,6 +357,42 @@ void montarMatrizCorrentes(adjMatrix *matriz, int nodes, adjMatrix D[], int k, f
                 }
                 correntes[i][j] = somaCorrentes;
             }
+        }
+    }
+}
+
+void gerarMatrizAdj(adjMatrix *matriz, int n, int m){
+    createAdjMatrix(matriz, n*m);
+    bool *polN1N2 = new bool();
+    int c = 0;
+    char componente = '0';
+    float valor = 0;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            int comp = rand() %3 + 1;
+            //int valor = rand() %15 + 1;
+            if(comp==1){
+                componente = 'r';
+                valor = 2;
+            }
+            if(comp==2){
+                componente = 'r';
+                valor = 2;
+            }
+            if(comp==3){
+                componente = 'v';
+                valor = 5;
+            }
+            *polN1N2 = false;
+            if(j < m-1){
+                if(c<c+1) *polN1N2 = true;
+                addComponente(matriz, componente, valor, c, c+1, polN1N2);
+            }
+            if(i < n-1){
+                if(c<c+m) *polN1N2 = true;
+                addComponente(matriz, componente, valor, c, c+m, polN1N2);
+            }
+            c++;
         }
     }
 }
