@@ -14,14 +14,14 @@ Iniciar com a dimenção (que corresponde a quantidade de nós), nas proximas li
 
 Exemplo de arquivo txt:
 
-dim 8
-v 12.0 0 1
-r 3.0 1 2
-r 4.0 2 3
-r 1.0 3 0
-w 0.0 4 2
-v 6.0 3 5
-r 8.0 4 5
-r 8.0 4 6
-w 0.0 6 7
-w 0.0 7 5
+dim 8\
+v 12.0 0 1\
+r 3.0 1 2\
+r 4.0 2 3\
+r 1.0 3 0\
+w 0.0 4 2\
+v 6.0 3 5\
+r 8.0 4 5\
+r 8.0 4 6\
+w 0.0 6 7\
+w 0.0 7 5\
