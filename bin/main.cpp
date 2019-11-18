@@ -13,18 +13,20 @@ int main()
     adjMatrix *matriz = new adjMatrix();
 
     // Código para gerar um circuito com m1*m2 nós
-//    int m1 = 9;
-//    int m2 = 9;
-//    int n = m1*m2;
-//    gerarMatrizAdj(matriz, m1, m2);
+    int m1 = 5;
+    int m2 = 5;
+    int n = m1*m2;
+    gerarMatrizAdj(matriz, m1, m2);
 
     // Código para ler um circuito de um .txt definido pelo usuário
-    Parser leitor_dados(matriz);
-    leitor_dados.tratamento("teste_8-1_circuito");
-    int n = leitor_dados.getNodes();
+//    Parser leitor_dados(matriz);
+//    leitor_dados.tratamento("teste_8-1_circuito");
+//    int n = leitor_dados.getNodes();
 
+    //---------------------------------------
     clock_t time, timef;
     time = clock();
+    //---------------------------------------
 
     // TRECHO USADO APENAS PARA TESTES RAPIDOS
 //    bool *poltrue = new bool();
@@ -94,7 +96,7 @@ int main()
     for(int i=0; i<n; i++){
         for(int j=0; j<n; j++){
             if(matrizCorrentes[i][j] != 0){
-                cout<<"I"<<i<<j<<"= "<<matrizCorrentes[i][j]<<" | ";
+                cout<<"I("<<i<<"-"<<j<<")= "<<matrizCorrentes[i][j]<<" | ";
             }
         }
     }
