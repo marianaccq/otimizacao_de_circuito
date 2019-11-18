@@ -334,3 +334,20 @@ void resolverSistema(float a[][MAX], float b[], int n, float x[])
         x[i] = x[i] / aux[i][i];
     }
 }
+
+void montarMatrizCorrentes(adjMatrix *matriz, int nodes, adjMatrix D[], int k, float correntes[][MAX], float correntesMalha[])
+{
+    for(int i=0; i<nodes; i++){
+        for(int j=0; j<nodes; j++){
+            if(matriz->v[i][j].type != '0'){
+                float somaCorrentes = 0;
+                for(int l=0; l<k; l++){
+                    if(D[l].v[i][j].type != '0'){
+                        somaCorrentes += correntesMalha[l];
+                    }
+                }
+                correntes[i][j] = somaCorrentes;
+            }
+        }
+    }
+}

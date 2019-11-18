@@ -37,8 +37,11 @@ int main()
     adjMatrix *C = new adjMatrix();
 
     adjMatrix D[n];
-    //createAdjMatrix(B, n);
-    //createAdjMatrix(C, n);
+    for(int i=0; i<n; i++){
+        createAdjMatrix(&D[i], n);
+    }
+    createAdjMatrix(B, n);
+    createAdjMatrix(C, n);
     int k=0;
 
     k=findFundamentalcycles(matriz, B, C, D, n);
@@ -64,7 +67,7 @@ int main()
 
     resolverSistema(matrizResistencia, arrayVoltagem, k, x);
 
-    cout<<endl<<"Vetor de resultados:"<<endl;
+    cout<<endl<<"Correntes de Malha:"<<endl;
     for(int i=0; i<k; i++){
         cout<<"| I"<<i<<" = "<<x[i]<<"A ";
     }
@@ -72,18 +75,30 @@ int main()
     cout<<endl;
     cout<<endl;
 
+    float matrizCorrentes[MAX][MAX] = {0};
+    montarMatrizCorrentes(matriz, n, D, k, matrizCorrentes, x);
 
-    cout<<"MATRIZ A: "<<endl;
-    printMatrix(matriz, n);
-    cout<<"MATRIZ B: "<<endl;
-    printMatrix(B, n);
-    cout<<"MATRIZ C: "<<endl;
-    printMatrix(C, n);
-
-    for(int i=0; i<k; i++){
-        cout<<"MATRIZ D["<<i<<"]: "<<endl;
-        printMatrix(&D[i], n);
+    cout<<endl<<"Correntes de Ramo:"<<endl;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            if(matrizCorrentes[i][j] != 0){
+                cout<<"I"<<i<<j<<"= "<<matrizCorrentes[i][j]<<" | ";
+            }
+        }
     }
+    cout<<endl;
+
+//    cout<<"MATRIZ A: "<<endl;
+//    printMatrix(matriz, n);
+//    cout<<"MATRIZ B: "<<endl;
+//    printMatrix(B, n);
+//    cout<<"MATRIZ C: "<<endl;
+//    printMatrix(C, n);
+
+//    for(int i=0; i<k; i++){
+//        cout<<"MATRIZ D["<<i<<"]: "<<endl;
+//        printMatrix(&D[i], n);
+//    }
 
     cout<<endl;
     cout<<endl;

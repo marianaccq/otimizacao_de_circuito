@@ -1,7 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 // Header para a definição de algumas funções e structs úteis no tratamento das nossas estruturas
-#define MAX 200
+#define MAX 100
 
 struct componente{
     char type;
@@ -42,5 +42,6 @@ float somarResistenciaCiclo(adjMatrix D[], int k, int nodes);
 float interseccionarResistencias(adjMatrix D[], int k1, int k2, int nodes);
 float somarTensaoCiclo(adjMatrix D[], int k, int nodes);
 void resolverSistema(float a[][MAX], float b[], int n, float x[]);
+void montarMatrizCorrentes(adjMatrix *matriz, int nodes, adjMatrix D[], int k, float correntes[][MAX], float correntesMalha[]);
 
 #endif // UTIL_H
