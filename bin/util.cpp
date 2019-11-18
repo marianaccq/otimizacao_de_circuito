@@ -170,6 +170,10 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
     return k;
 }
 
+/*
+ * A função acharPontesRec é baseada no código do site Geeks for Geeks, disponível
+ * em https://www.geeksforgeeks.org/bridge-in-a-graph/
+ */
 void acharPontesRec(adjMatrix *matriz, int u, bool visitado[], int ordemDesc[], int low[], int pais[], int &contador)
 {
     visitado[u] = true;
@@ -194,6 +198,10 @@ void acharPontesRec(adjMatrix *matriz, int u, bool visitado[], int ordemDesc[], 
     }
 }
 
+/*
+ * A função acharPontesUtil é baseada no código do site Geeks for Geeks, disponível
+ * em https://www.geeksforgeeks.org/bridge-in-a-graph/
+ */
 void acharPontesUtil(adjMatrix *matriz)
 {
     // Declarando variáveis para utilizar na função recursiva de achar pontes no grafo
