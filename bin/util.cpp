@@ -154,7 +154,7 @@ int findFundamentalcycles(adjMatrix *A, adjMatrix *B, adjMatrix *C, adjMatrix D[
         for(int j = i+1; j < nodes; j++){
             D[k] = *aux;
             if(C->v[i][j].type != '0'){
-                addComponente(&D[k], C->v[i][j].type, C->v[i][j].value, i, j);
+                addComponente(&D[k], C->v[i][j].type, C->v[i][j].value, i, j, &C->v[i][j].polN1N2);
 
                 // Procedimento de "prunning" na matriz D[k]
                 // Onde k = numero de ramos que podem formar ciclos fundamentais
