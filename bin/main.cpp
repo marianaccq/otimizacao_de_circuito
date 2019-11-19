@@ -13,14 +13,14 @@ int main()
     adjMatrix *matriz = new adjMatrix();
 
     // Código para gerar um circuito com m1*m2 nós
-    int m1 = 5;
-    int m2 = 5;
+    int m1 = 8;
+    int m2 = 10;
     int n = m1*m2;
     gerarMatrizAdj(matriz, m1, m2);
 
     // Código para ler um circuito de um .txt definido pelo usuário
 //    Parser leitor_dados(matriz);
-//    leitor_dados.tratamento("teste_8-1_circuito");
+//    leitor_dados.tratamento("teste_8-2_circuito");
 //    int n = leitor_dados.getNodes();
 
     //---------------------------------------
@@ -64,12 +64,13 @@ int main()
     montarMatrizCircuito(D, k, n, matrizResistencia, arrayVoltagem);
 
     float x[MAX] = {0};
+    float matrizTensoes[MAX][MAX] = {0};
 
     resolverSistema(matrizResistencia, arrayVoltagem, k, x);
 
     float matrizCorrentes[MAX][MAX] = {0};
     montarMatrizCorrentes(matriz, n, D, k, matrizCorrentes, x);
-
+    montarMatrizTensoes(matriz, n, matrizCorrentes, matrizTensoes);
     timef = clock();
 
 //    for(int i=0; i<k; i++){
@@ -90,17 +91,25 @@ int main()
     }
     cout<<"|";
     cout<<endl;
-    cout<<endl;
 
     cout<<endl<<"Correntes de Ramo:"<<endl;
     for(int i=0; i<n; i++){
         for(int j=0; j<n; j++){
             if(matrizCorrentes[i][j] != 0){
-                cout<<"I("<<i<<"-"<<j<<")= "<<matrizCorrentes[i][j]<<" | ";
+                cout<<"I("<<i<<"-"<<j<<")= "<<matrizCorrentes[i][j]<<"A | ";
             }
         }
     }
     cout<<endl;
+
+    cout<<endl<<"Tensoes de Ramo:"<<endl;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            if(matrizCorrentes[i][j] != 0){
+                cout<<"V("<<i<<"-"<<j<<")= "<<matrizTensoes[i][j]<<"V | ";
+            }
+        }
+    }
 
 //    cout<<"MATRIZ A: "<<endl;
 //    printMatrix(matriz, n);

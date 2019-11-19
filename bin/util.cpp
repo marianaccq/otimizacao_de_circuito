@@ -1,6 +1,7 @@
 #include <iostream>
 #include "util.h"
 #include "stdlib.h"
+#include "time.h"
 
 using namespace std;
 
@@ -361,7 +362,21 @@ void montarMatrizCorrentes(adjMatrix *matriz, int nodes, adjMatrix D[], int k, f
     }
 }
 
+void montarMatrizTensoes(adjMatrix *matriz, int nodes, float correntesRamo[][MAX], float tensoesRamo[][MAX]){
+    for(int i=0; i<nodes-1; i++){
+        for(int j=0; j<nodes; j++){
+            if(matriz->v[i][j].type == 'R' or matriz->v[i][j].type == 'r'){
+                tensoesRamo[i][j] = matriz->v[i][j].value * correntesRamo[i][j];
+            }
+            if(matriz->v[i][j].type == 'V' or matriz->v[i][j].type == 'v'){
+                tensoesRamo[i][j] = matriz->v[i][j].value;
+            }
+        }
+    }
+}
+
 void gerarMatrizAdj(adjMatrix *matriz, int n, int m){
+    srand(time(NULL));
     createAdjMatrix(matriz, n*m);
     bool *polN1N2 = new bool();
     int c = 0;
@@ -370,18 +385,18 @@ void gerarMatrizAdj(adjMatrix *matriz, int n, int m){
     for(int i=0; i<n; i++){
         for(int j=0; j<m; j++){
             int comp = rand() %3 + 1;
-            //int valor = rand() %15 + 1;
+            int valor = rand() %15 + 1;
             if(comp==1){
                 componente = 'r';
-                valor = 2;
+                //valor = 2;
             }
             if(comp==2){
                 componente = 'r';
-                valor = 2;
+                //valor = 2;
             }
             if(comp==3){
                 componente = 'v';
-                valor = 5;
+                //valor = 5;
             }
             *polN1N2 = false;
             if(j < m-1){

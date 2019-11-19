@@ -43,6 +43,7 @@ float interseccionarResistencias(adjMatrix D[], int k1, int k2, int nodes);
 float somarTensaoCiclo(adjMatrix D[], int k, int nodes);
 void resolverSistema(float a[][MAX], float b[], int n, float x[]);
 void montarMatrizCorrentes(adjMatrix *matriz, int nodes, adjMatrix D[], int k, float correntes[][MAX], float correntesMalha[]);
+void montarMatrizTensoes(adjMatrix *matriz, int nodes, float correntesRamo[][MAX], float tensoesRamo[][MAX]);
 void gerarMatrizAdj(adjMatrix *matriz, int n, int m);
 
 #endif // UTIL_H
